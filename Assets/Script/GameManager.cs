@@ -7,8 +7,9 @@ using System.IO;
 
 public class GameManager : MonoBehaviour {
     public static GameManager control;
-    GameObject selectedAvatar; //avatar used in game
+    public GameObject[] avatars = new GameObject[3];
 
+    GameObject selectedAvatar; //avatar used in game
     public Texture[] avatarImage = new Texture[3];
     int highscore;
     int nextLevel;
@@ -28,17 +29,30 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
+
+    // LevelLoad is called to change scene
     public void LevelLoad (int level) {
         SceneManager.LoadScene(level);
+        nextLevel = level;
     }
+
+    // QuitGame is called to quit the application
     public void QuitGame() {
         Application.Quit();
     }
-    void Load () {
 
+    // Load is called to load player information
+    void Load () {
+        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat")) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            GameStat gt = (GameStat)bf.Deserialize(file);
+            file.Close();
+        }
     }
+
+    // Save is called to save player's data
     void Save () {
         BinaryFormatter bf = new BinaryFormatter() ;
         FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
@@ -50,6 +64,8 @@ public class GameManager : MonoBehaviour {
 
     [Serializable]
     class GameStat {
-
+        int highscore;
+        bool firstAvatar;
+        bool secondAvatar;
     }
 }
