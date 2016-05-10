@@ -3,8 +3,9 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public int speed;
-    public GameObject[] Shoot = new GameObject[3];
+    public GameObject[] projectile= new GameObject[3];
     Vector2 mousePosition;
+   
 	// Use this for initialization
 	void Start () {
 	
@@ -12,22 +13,30 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-
-       if (Input.GetAxisRaw("Horizontal") > 0) {
+        Vector3 playerToCamera = Camera.main.WorldToViewportPoint(transform.position);
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Debug.Log(mousePosition);
+        Debug.Log(playerToCamera);
+        if (Input.GetAxisRaw("Horizontal") > 0) {
             transform.Translate(transform.right * speed * Time.deltaTime);
-       }
-       if (Input.GetAxisRaw("Horizontal") < 0)  {
+        }
+        if (Input.GetAxisRaw("Horizontal") < 0)  {
             transform.Translate(transform.right *-speed * Time.deltaTime);
-       }
-       if(Input.GetAxisRaw("Vertical") > 0) {
+        }
+        if(Input.GetAxisRaw("Vertical") > 0) {
             transform.Translate(transform.up * speed * Time.deltaTime);
-       }
-       if (Input.GetAxisRaw("Vertical") <0) {
+        }
+        if (Input.GetAxisRaw("Vertical") <0) {
            transform.Translate(transform.up * -speed * Time.deltaTime);
-       }
+        }
+       
+        if (Input.GetMouseButtonDown(0)) {
+            Shoot();
+        }
 
 
+    }
+    void Shoot () {
 
     }
 }
