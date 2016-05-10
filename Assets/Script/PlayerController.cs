@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour {
     public int speed;
     public GameObject[] projectile= new GameObject[3];
     Vector2 mousePosition;
-   
+    static int avatar;
 	// Use this for initialization
 	void Start () {
 	
@@ -13,10 +13,15 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //return the viewportposition of the player on the main camera
         Vector3 playerToCamera = Camera.main.WorldToViewportPoint(transform.position);
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(mousePosition);
-        Debug.Log(playerToCamera);
+
+        //if the viewportposition is out of (0,0) or (1,1)
+        if (playerToCamera.x > 1 || playerToCamera.x < 0 || playerToCamera.y > 1 || playerToCamera.y < 0) {
+            Debug.Log("gameover");
+        }
+
+      
         if (Input.GetAxisRaw("Horizontal") > 0) {
             transform.Translate(transform.right * speed * Time.deltaTime);
         }
@@ -29,14 +34,5 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetAxisRaw("Vertical") <0) {
            transform.Translate(transform.up * -speed * Time.deltaTime);
         }
-       
-        if (Input.GetMouseButtonDown(0)) {
-            Shoot();
-        }
-
-
-    }
-    void Shoot () {
-
     }
 }
