@@ -8,13 +8,11 @@ using System.IO;
 public class GameManager : MonoBehaviour {
     public static GameManager control;
     public GameObject[] avatars = new GameObject[3];
-
     GameObject selectedAvatar; //avatar used in game
-    public Texture[] avatarImage = new Texture[3];
     int highscore;
     int nextLevel;
-    bool firstOptional;
-    bool secondOptional;
+    public bool firstOptional;
+    public bool secondOptional;
 
 
     // Use this for initialization
@@ -40,6 +38,9 @@ public class GameManager : MonoBehaviour {
     // QuitGame is called to quit the application
     public void QuitGame() {
         Application.Quit();
+    }
+    public void AvatarSelection (int avatar) {
+        selectedAvatar = avatars[avatar];
     }
 
     // Load is called to load player information
