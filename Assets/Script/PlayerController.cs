@@ -1,18 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     public int speed;
-    public GameObject[] projectile= new GameObject[3];
+    public int score;
+    public GameObject projectile;
+    public Sprite[] avatars = new Sprite[3];
     GameObject gameManager;
     GameManager GM;
     Vector2 mousePosition;
     static int avatar;
-	// Use this for initialization
-	void Start () {
+    Image image;
+
+    void Awake() {
         gameManager = GameObject.Find("GameManager");
         GM = gameManager.GetComponent<GameManager>();
-	}
+        image = gameObject.GetComponent<Image>();
+    }
+
+	void Start () {
+        
+        if (GM.selectedAvatar == 1) {
+            image.sprite = avatars[0];
+        }
+        if (GM.selectedAvatar == 2) {
+            image.sprite = avatars[1];
+        }
+        if (GM.selectedAvatar == 3) {
+            image.sprite = avatars[2];
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -24,8 +42,6 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("gameover");
             GM.LevelLoad(3);
         }
-
-      
         if (Input.GetAxisRaw("Horizontal") > 0) {
             transform.Translate(transform.right * speed * Time.deltaTime);
         }
@@ -37,6 +53,15 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetAxisRaw("Vertical") <0) {
            transform.Translate(transform.up * -speed * Time.deltaTime);
+        }
+        if (score > 5) {
+            GM.firstOptional = true;
+        }
+        if (score > 10) {
+            GM.secondOptional = true;
+        }
+        if (score > GM.highscore) {
+            GM.highscore = score;
         }
     }
 }

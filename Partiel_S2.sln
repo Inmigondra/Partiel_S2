@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Partiel_S2.CSharp.Plugins",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Partiel_S2.CSharp", "Partiel_S2.CSharp.csproj", "{D2B53DB3-9826-857E-78B3-659AC719B9BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Partiel_S2.CSharp.Editor", "Partiel_S2.CSharp.Editor.csproj", "{01190C96-76B2-CCA9-8D9B-7DBF8BA2A486}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{D2B53DB3-9826-857E-78B3-659AC719B9BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2B53DB3-9826-857E-78B3-659AC719B9BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2B53DB3-9826-857E-78B3-659AC719B9BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01190C96-76B2-CCA9-8D9B-7DBF8BA2A486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01190C96-76B2-CCA9-8D9B-7DBF8BA2A486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01190C96-76B2-CCA9-8D9B-7DBF8BA2A486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01190C96-76B2-CCA9-8D9B-7DBF8BA2A486}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

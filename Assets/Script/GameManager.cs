@@ -7,9 +7,8 @@ using System.IO;
 
 public class GameManager : MonoBehaviour {
     public static GameManager control;
-    public GameObject[] avatars = new GameObject[3];
-    GameObject selectedAvatar; //avatar used in game
-    int highscore;
+    public int selectedAvatar; //avatar used in game
+    public int highscore;
     int nextLevel;
     public bool firstOptional;
     public bool secondOptional;
@@ -34,15 +33,24 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene(level);
         nextLevel = level;
     }
+    //Choose the avatar
+    public void SelectAvatar(int sel) {
+        selectedAvatar = sel;
+        if (firstOptional == false && sel == 2)
+        {
+            selectedAvatar = 1;
+        }
+        if (secondOptional == false && sel == 3)
+        {
+            selectedAvatar = 1;
+        }
+    }
 
     // QuitGame is called to quit the application
     public void QuitGame() {
         Application.Quit();
     }
-    public void AvatarSelection (int avatar) {
-        selectedAvatar = avatars[avatar];
-    }
-
+  
     // Load is called to load player information
     void Load () {
         if (File.Exists(Application.persistentDataPath + "/playerInfo.dat")) {
