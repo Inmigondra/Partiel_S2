@@ -43,9 +43,19 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetAxisRaw("Vertical") > 0) {
             transform.Translate(transform.up * speed * Time.deltaTime);
         }
-        if (Input.GetAxisRaw("Vertical") <0) {
+        if (Input.GetAxisRaw("Vertical") < 0) {
            transform.Translate(transform.up * -speed * Time.deltaTime);
         }
+        if (Input.GetMouseButtonDown(0)) {
+            Vector3 target = Camera.main.ScreenToWorldPoint(new Vector3( Input.mousePosition.x,Input.mousePosition.y, 0));
+            Vector3 myPos = transform.position;
+            Vector2 direction = target - myPos ;
+            Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.x, direction.y ) * 90 ) ;
+            direction.Normalize();
+            GameObject shoot = (GameObject)Instantiate(projectile, myPos, rotation);
+            shoot.GetComponent<Rigidbody2D>().velocity = direction * speed;
+        }
+
         if (score > 5) {
             GM.firstOptional = true;
         }
