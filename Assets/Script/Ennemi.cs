@@ -22,5 +22,11 @@ public class Ennemi : MonoBehaviour {
         
         transform.position = Vector3.Lerp(transform.position, player.transform.position, 0.001f);
     }
-    
+    void OnTriggerStay2D(Collider2D col) {
+        if (col.gameObject.tag == "Tir") {
+            Destroy(gameObject);
+            PlayerController.score += 1;
+        }
+
+    }
 }

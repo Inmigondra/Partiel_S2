@@ -9,11 +9,10 @@ public class GameManager : MonoBehaviour {
     public static GameManager control;
     public int selectedAvatar; //avatar used in game
     public int highscore;
-    int nextLevel;
+    public int actualLevel;
     public bool firstOptional;
     public bool secondOptional;
-
-
+    float timer;
     // Use this for initialization
     void Awake () {
         if (control == null) {
@@ -22,16 +21,37 @@ public class GameManager : MonoBehaviour {
         }else if (control != null){
             Destroy(gameObject);
         }
+        Load();
 	}
-	
+	void Start () {
+        
+    }
 	// Update is called once per frame
 	void Update () {
+        
+        if (actualLevel == 3) {
+            timer += 1 * Time.deltaTime;
+            if (timer > 5) {
+                LevelLoad(0);
+                timer = 0;
+            }
+            if (actualLevel == 0) {
+                Load();
+            }
+            if (actualLevel == 1) {
+                Load();
+            }
+            if (actualLevel == 3) {
+                Save();
+            }
+        }
+
 	}
 
     // LevelLoad is called to change scene
     public void LevelLoad (int level) {
         SceneManager.LoadScene(level);
-        nextLevel = level;
+        actualLevel = level;
     }
     //Choose the avatar
     public void SelectAvatar(int sel) {
@@ -52,29 +72,40 @@ public class GameManager : MonoBehaviour {
     }
   
     // Load is called to load player information
-    void Load () {
+    public void Load () {
         if (File.Exists(Application.persistentDataPath + "/playerInfo.dat")) {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-            GameStat gt = (GameStat)bf.Deserialize(file);
+            GameStat gs = (GameStat)bf.Deserialize(file);
+            highscore = gs.highscore;
+            if (gs.firstAvatar == true)
+                firstOptional = true;
+            if (gs.secondAvatar == true)
+                secondOptional = true;
+            Debug.Log ("load");
             file.Close();
         }
     }
 
     // Save is called to save player's data
-    void Save () {
+    public void Save () {
         BinaryFormatter bf = new BinaryFormatter() ;
-        FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-        GameStat gt = new GameStat();
-
-        bf.Serialize(file, gt);
+        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
+        GameStat gs = new GameStat();
+        gs.highscore = highscore;
+        if (firstOptional == true)
+            gs.firstAvatar = true;
+        if (secondOptional == true)
+            gs.secondAvatar = true;
+        bf.Serialize(file, gs);
+        Debug.Log("save");
         file.Close();
     }
 
     [Serializable]
     class GameStat {
-        int highscore;
-        bool firstAvatar;
-        bool secondAvatar;
+        public int highscore;
+        public bool firstAvatar;
+        public bool secondAvatar;
     }
 }
