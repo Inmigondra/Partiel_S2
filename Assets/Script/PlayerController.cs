@@ -4,36 +4,28 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     public int speed;
-    public int score;
+    public static int score;
     public GameObject projectile;
-    public Sprite[] avatars = new Sprite[3];
     GameObject gameManager;
     GameManager GM;
     Vector2 mousePosition;
     static int avatar;
-    Image image;
+   
 
     void Awake() {
         gameManager = GameObject.Find("GameManager");
         GM = gameManager.GetComponent<GameManager>();
-        image = gameObject.GetComponent<Image>();
+       
     }
 
 	void Start () {
         
-        if (GM.selectedAvatar == 1) {
-            image.sprite = avatars[0];
-        }
-        if (GM.selectedAvatar == 2) {
-            image.sprite = avatars[1];
-        }
-        if (GM.selectedAvatar == 3) {
-            image.sprite = avatars[2];
-        }
+       
     }
 	
 	// Update is called once per frame
 	void Update () {
+        
         //return the viewportposition of the player on the main camera
         Vector3 playerToCamera = Camera.main.WorldToViewportPoint(transform.position);
 
